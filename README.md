@@ -39,7 +39,7 @@ Type "help", "copyright", "credits" or "license" for more information.
   import requests
 
   # GET the version info
-  version_rs = requests.get("https://snoke.simplyrfid.com:7000", params={ "op": "get-version" })
+  version_rs = requests.get(pogi_url, params={ "op": "get-version" })
 
   # Check the return status, and print the response text
   if (version_rs.status_code == 200):
@@ -55,11 +55,17 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 ## Authenticate via username and password (returns token)
 
+* **Prereq** You'll need a valid URL, user id and password to connect to PogiAPI
+  ```
+  pogi_url = 'https://www.-.com:7000' # Insert your Pogi server URL here
+  user_id = ""  # Insert your Pogi user ID here
+  user_pwd = "" # Insert your Pogi password here
+  ```  
 * **op** = token-get
 * **Authenticate** (Note: Replace the userId and password)
   ```
   # POST auth
-  token_rs = requests.post("https://snoke.simplyrfid.com:7000", data={ "op": "token-get", "userId": "API tester", "password": "API_Tester" })
+  token_rs = requests.post(pogi_url, data={ "op": "token-get", "userId": user_id, "password": user_pwd })
 
   # Check the return status, and print the response text
   if (token_rs.status_code == 200):
@@ -130,7 +136,7 @@ Type "help", "copyright", "credits" or "license" for more information.
   ```
 * **Get inventory history list**
   ```
-  inventory_rs = requests.post("https://snoke.simplyrfid.com:7000", data=inventory_params)
+  inventory_rs = requests.post(pogi_url, data=inventory_params)
   # Check the return status, and print the response text
   if (inventory_rs.status_code == 200):
       print(inventory_rs.text)
@@ -171,7 +177,7 @@ Type "help", "copyright", "credits" or "license" for more information.
     "token": token,
     "tag": "000000000000000000000000"
   }
-  id_get_rs = requests.post("https://snoke.simplyrfid.com:7000", data=payload)
+  id_get_rs = requests.post(pogi_url, data=payload)
 
   # Check the return status, and print the response text
   if (id_get_rs.status_code == 200):
@@ -206,7 +212,7 @@ This is a two step process.
     "token": token,
     "tagId": "000000000000000000000000"
   }
-  id_undelete_rs = requests.post("https://snoke.simplyrfid.com:7000", data=payload)
+  id_undelete_rs = requests.post(pogi_url, data=payload)
   # Check the return status, and print the response text
   if (id_undelete_rs.status_code == 200):
       print(id_undelete_rs.json())
@@ -224,7 +230,7 @@ This is a two step process.
     "token": token,
     "tagId": "000000000000000000000000"
   }
-  id_delete_rs = requests.post("https://snoke.simplyrfid.com:7000", data=payload)
+  id_delete_rs = requests.post(pogi_url, data=payload)
   # Check the return status, and print the response text
   if (id_delete_rs.status_code == 200):
       print(id_delete_rs.json())
@@ -246,7 +252,7 @@ This is a two step process.
     "name": "QuickTag Demo",
     "zone": "Laboratory"
   }
-  id_add_rs = requests.post("https://snoke.simplyrfid.com:7000", data=payload)
+  id_add_rs = requests.post(pogi_url, data=payload)
   ```
 * **Check the status**
   ```
@@ -271,7 +277,7 @@ This is a two step process.
     "name": "QuickTag Demo Updated",
     "zone": "Laboratory"
   }
-  id_update_rs = requests.post("https://snoke.simplyrfid.com:7000", data=payload)
+  id_update_rs = requests.post(pogi_url, data=payload)
   ```
 * **Check the status**
   ```
