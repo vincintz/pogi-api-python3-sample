@@ -12,7 +12,7 @@ if not user_id or not user_pwd:
 
 
 print("GET the version info")
-version_rs = requests.get(pogi_url, params={ "op": "get-version" })
+version_rs = requests.get(pogi_url, params={ "op": "version" })
 
 # Check the return status, and print the response text
 if (version_rs.status_code == 200):
@@ -22,7 +22,7 @@ else:
 
 print("Authenticate via username and password (returns token)")
 # POST auth
-token_rs = requests.post(pogi_url, data={ "op": "token-get", "userId": user_id, "password": user_pwd })
+token_rs = requests.post(pogi_url, params={ "op": "token-get", "userId": user_id, "password": user_pwd })
 
 # Check the return status, and print the response text
 if (token_rs.status_code == 200):
@@ -33,6 +33,7 @@ else:
 
 print("Store Token from response")
 token_data = token_rs.json()
+print(token_data, token_data["token"])
 if "token" in token_data:
     token = token_data["token"]
     print("Token: " + token)
@@ -63,7 +64,7 @@ inventory_params = {
     "orderColumn": "update_date",
     "orderDirection": "DESC"
 }
-inventory_rs = requests.post(pogi_url, data=inventory_params)
+inventory_rs = requests.post(pogi_url, params=inventory_params)
 # Check the return status, and print the response text
 if (inventory_rs.status_code == 200):
     print(inventory_rs.text)
@@ -82,7 +83,7 @@ payload = {
   "token": token,
   "tag": "000000000000000000000000"
 }
-id_get_rs = requests.post(pogi_url, data=payload)
+id_get_rs = requests.post(pogi_url, params=payload)
 
 # Check the return status, and print the response text
 if (id_get_rs.status_code == 200):
@@ -101,7 +102,7 @@ payload = {
   "token": token,
   "tagId": "000000000000000000000000"
 }
-id_undelete_rs = requests.post(pogi_url, data=payload)
+id_undelete_rs = requests.post(pogi_url, params=payload)
 # Check the return status, and print the response text
 if (id_undelete_rs.status_code == 200):
     print(id_undelete_rs.json())
@@ -115,7 +116,7 @@ payload = {
   "token": token,
   "tagId": "000000000000000000000000"
 }
-id_delete_rs = requests.post(pogi_url, data=payload)
+id_delete_rs = requests.post(pogi_url, params=payload)
 # Check the return status, and print the response text
 if (id_delete_rs.status_code == 200):
     print(id_delete_rs.json())
@@ -132,11 +133,11 @@ payload = {
   "name": "QuickTag Demo",
   "zone": "Laboratory"
 }
-id_add_rs = requests.post(pogi_url, data=payload)
+id_add_rs = requests.post(pogi_url, params=payload)
 
 # Check the return status, and print the response text
 if (id_add_rs.status_code == 200):
-    print(id_add_rs.json())
+    print('Item created')
 else:
     print('Something went wrong')
 
@@ -151,10 +152,10 @@ payload = {
   "name": "QuickTag Demo Updated",
   "zone": "Laboratory"
 }
-id_update_rs = requests.post(pogi_url, data=payload)
+id_update_rs = requests.post(pogi_url, params=payload)
 
 # Check the return status, and print the response text
 if (id_update_rs.status_code == 200):
-    print(id_update_rs.json())
+    print('Item updated')
 else:
     print('Something went wrong')
