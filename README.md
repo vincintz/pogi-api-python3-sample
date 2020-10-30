@@ -33,7 +33,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 * **op** = get-version
 
-* **Get version** (Note: replace `snoke.simplyrfid.com` with the actual API URL)
+* **Get version** (Note: `pogi_url` should contain the API URL)
   ```
   # Import the requests library (the rest of the examples assumes is already imported)
   import requests
